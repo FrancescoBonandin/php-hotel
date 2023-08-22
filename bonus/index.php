@@ -41,8 +41,43 @@
     ];
     $categories = array_keys($hotels[0]);
     
-    var_dump($categories);
+
+    $parkingFilter = $_GET['car-park'] ?? 'any';
     
+    echo $parkingFilter;
+
+    if($parkingFilter === 'true'){
+
+        foreach($hotels as $i => $hotel){
+
+            foreach($hotel as $key => $value){
+
+                if($key == 'parking' && $value === false){
+                    var_dump($hotel);
+                    array_splice($hotels,array_search($hotel,$hotels),1);
+                }
+            }
+
+        }
+
+    }
+
+    else if($parkingFilter === 'false'){
+
+        foreach($hotels as $i => $hotel){
+
+            foreach($hotel as $key => $value){
+
+                if($key == 'parking' && $value === true){
+                    var_dump($hotel);
+
+                    array_splice($hotels,array_search($hotel,$hotels),1);
+                }
+            }
+
+        }
+
+    }
 ?>
 
 <!DOCTYPE html>
@@ -80,7 +115,23 @@
         
         <!-- header -->
         <header>
-            
+            <form action="" method="get">
+
+                <label for="any">Any</label>
+                <input type="radio" name="car-park" id="any" value="any" checked>
+
+                <label for="yes">Yes</label>
+                <input type="radio" name="car-park" id="yes" value="true">
+
+                <label for="no">No</label>
+                <input type="radio" name="car-park" id="no" value="false">
+                
+
+                <button type="submit">
+                    filtra
+                </button>
+
+            </form>
         </header>
         <!-- fine header -->
         
@@ -114,7 +165,7 @@
 
                                            $replaced = str_replace ('_', ' ', $category) ;
 
-                                           echo $replaced;
+                                           echo ucfirst ($replaced);
 
                                         }
 
@@ -174,11 +225,11 @@
                                     
                                     <?php  
 
-                                        if($key=='parking'&& $value == true){
+                                        if($key=='parking'&& $value === true){
                                             echo 'Si';
                                         }
 
-                                        elseif($key=='parking'&& $value == false){
+                                        elseif($key=='parking'&& $value === false){
                                             echo 'No';
                                         }
 
