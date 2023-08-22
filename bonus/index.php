@@ -39,17 +39,14 @@
 
         
     ];
+
     $categories = array_keys($hotels[0]);
-    
 
     $parkingFilter = $_GET['car-park'] ?? 'any';
+
     $voteFilter = $_GET['vote'] ?? 0;
-    
-    echo $parkingFilter;
-    echo $voteFilter;
 
     foreach($hotels as $i => $hotel){
-
         
         if($hotel['vote'] >= intval($voteFilter) ){
     
@@ -65,31 +62,22 @@
                 
                 else if($parkingFilter === 'false'){
                     
-                    
-                    
                     if($key == 'parking' && $value === true){
                         
                         array_splice($hotels,array_search($hotel,$hotels),1);
                     }
                     
-                    
                 }
-                
                 
             }
         
         }
         
         else{
-            var_dump($hotel);
-
             array_splice($hotels,array_search($hotel,$hotels),1);
         }
         
     }
-
-
-    
 
 ?>
 
@@ -124,186 +112,234 @@
         
     </head>
     
-    <body class="debug">
-        
-        <!-- header -->
-        <header>
-            <form action="" method="get">
+    <body >
 
-                <div>
-                    Filter Hotel by Parking Availability:
-                    
-                    <label for="any">Any</label>
-                    <input type="radio" name="car-park" id="any" value="any" checked>
+        <div class="container">
+
+            <!-- header -->
+            <header>
     
-                    <label for="yes">Yes</label>
-                    <input type="radio" name="car-park" id="yes" value="true">
+                <form action="" method="get">
     
-                    <label for="no">No</label>
-                    <input type="radio" name="car-park" id="no" value="false">
-                    
-                </div>
+                    <div>
+                        Filter Hotel by Parking Availability:
 
-                <div>
-                    <label for="vote">
-                        filter hotel by vote
-                    </label>
+                        <div>
+                            
+                            <label for="any">Any</label>
+                            <input type="radio" name="car-park" id="any" value="any" checked>
+                            
+                        </div>
+                        
+                        <div>
+            
+                            <label for="yes">Yes</label>
+                            <input type="radio" name="car-park" id="yes" value="true">
 
-                    <select name="vote" id="vote">
+                        </div>                        
 
-                        <option value="0" default>0</option>
-                        <option value="1">1</option>
-                        <option value="2">2</option>
-                        <option value="3">3</option>
-                        <option value="4">4</option>
-                        <option value="5">5</option>
+                        <div>
+             
+                            <label for="no">No</label>
+                            <input type="radio" name="car-park" id="no" value="false">
 
-                    </select>
-                </div>
-
-
-                <button type="submit">
-                    filtra
-                </button>
-
-            </form>
-        </header>
-        <!-- fine header -->
+                        </div>
         
-        <!-- main -->
-        <main>
+                        
+                    </div>
+    
+                    <div>
 
-            <table class="table">
+                        <label for="vote">
+                            filter hotel by vote
+                        </label>
+    
+                        <select name="vote" id="vote">
+    
+                            <option value="0" default>0</option>
+                            <option value="1">1</option>
+                            <option value="2">2</option>
+                            <option value="3">3</option>
+                            <option value="4">4</option>
+                            <option value="5">5</option>
+    
+                        </select>
 
-
+                    </div>
+    
+    
+                    <button type="submit">
+                        filtra
+                    </button>
+    
+                </form>
+    
+            </header>
+            <!-- fine header -->
+            
+            <!-- main -->
+            <main>
+    
+                <h3>
+                    Filtering parameters
+                
+    
+                </h3>
+    
+                <div>
+    
+                    <div>
+    
+                        <?php
+    
+                            echo $parkingFilter;
+    
+    
+                        ?>
+    
+                    </div>
+                
+                    <div>
+    
+                        <?php
+    
+                            echo $voteFilter;
+    
+    
+                        ?>
+    
+                    </div>
+                      
+                </div>
+    
+                <table class="table">
+    
+    
                     <thead>
-
+    
                         <tr>
-
+    
                             <th scope="col">
                                 #
                             </th>
-
-
+    
+    
                             <?php
-
+    
                                 foreach($categories as $category ) {
-
+    
                                 
-
+    
                             ?>
                                 <th scope="col">
-
+    
                                     <?php
-
+    
                                         if (str_contains($category,'_')){
-
-                                           $replaced = str_replace ('_', ' ', $category) ;
-
-                                           echo ucfirst ($replaced);
-
+    
+                                            $replaced = str_replace ('_', ' ', $category) ;
+    
+                                            echo ucfirst ($replaced);
+    
                                         }
-
+    
                                         else{
-
+    
                                             echo ucfirst ($category);
-
+    
                                         }
-
+    
                                     ?>
-
+    
                                 </th>
                                 
                             <?php
-
+    
                                 }
-
+    
                             ?>
                         </tr>
-
+    
                     </thead>
-
+    
                     <tbody>
-
+    
                         <?php
         
                             foreach ($hotels as $index => $hotel) {
         
                         ?>
-
+    
                             <tr>
-
-                       
-
+    
+                        
+    
                                 <th scope="row">
-
+    
                                     <?php
-
+    
                                         echo $index + 1;
-
+    
                                     ?>
-
+    
                                 </th>
-
+    
                                 <?php
-
+    
                                     foreach ($hotel as $key => $value){
-
-
-                                        echo "$key = $value ";
-
-
+    
                                 ?>
-
+    
                                 <td>
-
-                                    
+    
                                     <?php  
-
+    
                                         if($key=='parking'&& $value === true){
                                             echo 'Si';
                                         }
-
+    
                                         elseif($key=='parking'&& $value === false){
                                             echo 'No';
                                         }
-
+    
                                         else{
-
+    
                                             echo "$value";
-
+    
                                         }
                                     ?>
-
+    
                                 </td>
-
+    
                                 <?php
-
+    
                                     }
-
+    
                                 ?>
-
+    
                             </tr>
-
-
+    
                         <?php
-
+    
                             }
-
+    
                         ?>
-
+    
                     </tbody>
-            </table>
-
-        </main>
-        <!-- fine main -->
-
-        <!-- foooter -->
-        <footer>
+    
+                </table>
+    
+            </main>
+            <!-- fine main -->
+    
+            <!-- foooter -->
+            <footer>
+                
+            </footer>
+            <!-- fine footer -->
             
-        </footer>
-        <!-- fine footer -->
-        
+            
+        </div>
         
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz" crossorigin="anonymous"></script>
     </body>
