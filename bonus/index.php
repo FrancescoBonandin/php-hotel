@@ -43,41 +43,54 @@
     
 
     $parkingFilter = $_GET['car-park'] ?? 'any';
+    $voteFilter = $_GET['vote'] ?? 0;
     
     echo $parkingFilter;
+    echo $voteFilter;
 
-    if($parkingFilter === 'true'){
+    foreach($hotels as $i => $hotel){
 
-        foreach($hotels as $i => $hotel){
-
+        
+        if($hotel['vote'] >= intval($voteFilter) ){
+    
             foreach($hotel as $key => $value){
-
-                if($key == 'parking' && $value === false){
-                    var_dump($hotel);
-                    array_splice($hotels,array_search($hotel,$hotels),1);
+                
+                if($parkingFilter === 'true'){
+                    
+                    if($key == 'parking' && $value === false){
+                        array_splice($hotels,array_search($hotel,$hotels),1);
+                    }
+                    
                 }
+                
+                else if($parkingFilter === 'false'){
+                    
+                    
+                    
+                    if($key == 'parking' && $value === true){
+                        
+                        array_splice($hotels,array_search($hotel,$hotels),1);
+                    }
+                    
+                    
+                }
+                
+                
             }
-
+        
         }
+        
+        else{
+            var_dump($hotel);
 
+            array_splice($hotels,array_search($hotel,$hotels),1);
+        }
+        
     }
 
-    else if($parkingFilter === 'false'){
 
-        foreach($hotels as $i => $hotel){
+    
 
-            foreach($hotel as $key => $value){
-
-                if($key == 'parking' && $value === true){
-                    var_dump($hotel);
-
-                    array_splice($hotels,array_search($hotel,$hotels),1);
-                }
-            }
-
-        }
-
-    }
 ?>
 
 <!DOCTYPE html>
@@ -117,15 +130,37 @@
         <header>
             <form action="" method="get">
 
-                <label for="any">Any</label>
-                <input type="radio" name="car-park" id="any" value="any" checked>
+                <div>
+                    Filter Hotel by Parking Availability:
+                    
+                    <label for="any">Any</label>
+                    <input type="radio" name="car-park" id="any" value="any" checked>
+    
+                    <label for="yes">Yes</label>
+                    <input type="radio" name="car-park" id="yes" value="true">
+    
+                    <label for="no">No</label>
+                    <input type="radio" name="car-park" id="no" value="false">
+                    
+                </div>
 
-                <label for="yes">Yes</label>
-                <input type="radio" name="car-park" id="yes" value="true">
+                <div>
+                    <label for="vote">
+                        filter hotel by vote
+                    </label>
 
-                <label for="no">No</label>
-                <input type="radio" name="car-park" id="no" value="false">
-                
+                    <select name="vote" id="vote">
+
+                        <option value="0" default>0</option>
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                        <option value="4">4</option>
+                        <option value="5">5</option>
+
+                    </select>
+                </div>
+
 
                 <button type="submit">
                     filtra
