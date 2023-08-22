@@ -192,7 +192,7 @@
     
                         <?php
     
-                            echo $parkingFilter;
+                            echo "Parking: $parkingFilter";
     
     
                         ?>
@@ -203,7 +203,7 @@
     
                         <?php
     
-                            echo $voteFilter;
+                            echo "Minimum Vote: $voteFilter";
     
     
                         ?>
